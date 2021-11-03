@@ -9,6 +9,7 @@ class NodeRegister(object):
         self.suber = self.node.pubsub()
         self.subcall = {}
 
+
     def pub(self, topic : str, msg):
         if isinstance(msg, dict):
             self.node.publish(topic, str(msg))

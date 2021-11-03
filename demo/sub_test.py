@@ -3,15 +3,18 @@ sys.path.append("..")
 
 # -----------sub demo code -------------
 from manager import NodeRegister
+import time
 
 node = NodeRegister()
 
 def msg1_call(msg):
+    print("timestamp1:", time.time())
     # print(msg.author)
     # print(msg.version)
-    print(msg.a[0])
+    print(msg)
 
 def msg2_call(msg):
+    print("timestamp2:", time.time())
     # print(msg.author)
     # print(msg.version)
     print(msg)
