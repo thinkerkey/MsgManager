@@ -4,7 +4,7 @@ sys.path.append("..")
 # -----------pub demo code -------------
 from manager import NodeRegister
 from msg.pointcloud import PointCloud
-from msg.bboxes3d import BoundingBoxes3d
+from msg.bboxes3d import BoundingBoxes3D
 from msg.bbox2d import BoundingBox2D
 import time
 msg = {
@@ -20,7 +20,7 @@ msg2 = {
 
 
 node = NodeRegister()
-obj = BoundingBoxes3d()
+obj = BoundingBoxes3D()
 obj.bboxes3d[0] = BoundingBox2D()
 obj.bboxes3d[1] = BoundingBox2D()
 
