@@ -1,5 +1,5 @@
 from .utils import *
-from types import FunctionType
+from types import FunctionType, MethodType
 import json
 
 class NodeRegister(object):
@@ -21,7 +21,7 @@ class NodeRegister(object):
             print("不支持的消息类型")
 
     def sub(self, topic : str, callback: FunctionType):
-        if isinstance(callback, FunctionType):
+        if isinstance(callback, (FunctionType,MethodType)):
             self.suber.subscribe(topic)
             self.subcall[topic] = callback
         else:
@@ -34,7 +34,7 @@ class NodeRegister(object):
                 data=eval(data)
                 topic = item['channel'].decode()
                 msg = CreateObjectFromMsg(data)
-                self.subcall[topic](msg)
+                self.subcall[topic](msg, topic)
 
     def unsub(self, topic : str):
         try:
