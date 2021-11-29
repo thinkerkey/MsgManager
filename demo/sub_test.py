@@ -7,13 +7,13 @@ import time
 
 node = NodeRegister()
 
-def msg1_call(msg):
+def msg1_call(msg, topic):
     print("timestamp1:", time.time())
     # print(msg.author)
     # print(msg.version)
     print(msg)
 
-def msg2_call(msg):
+def msg2_call(msg, topic):
     print("timestamp2:", time.time())
     # print(msg.author)
     # print(msg.version)

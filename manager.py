@@ -1,7 +1,7 @@
 from .utils import *
 from types import FunctionType, MethodType
 import json
-
+import ast
 class NodeRegister(object):
     def __init__(self) -> None:
         super().__init__()
@@ -31,10 +31,10 @@ class NodeRegister(object):
         for item in self.suber.listen():
             if item['type']=='message':
                 data = item['data'].decode()
-                data=eval(data)
+                data = eval(data)
                 topic = item['channel'].decode()
-                msg = CreateObjectFromMsg(data)
-                self.subcall[topic](msg, topic)
+                # msg = CreateObjectFromMsg(data)
+                self.subcall[topic](data, topic)
 
     def unsub(self, topic : str):
         try:
