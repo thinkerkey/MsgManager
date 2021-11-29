@@ -1,4 +1,4 @@
-from utils import *
+from .utils import *
 from types import FunctionType
 import json
 
@@ -36,7 +36,7 @@ class NodeRegister(object):
                 msg = CreateObjectFromMsg(data)
                 self.subcall[topic](msg)
 
-    def unsubscribe(self, topic : str):
+    def unsub(self, topic : str):
         try:
             self.suber.unsubscribe(topic)
             self.subcall.pop(topic)
