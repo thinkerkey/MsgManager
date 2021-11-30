@@ -1,7 +1,23 @@
 from .utils import *
 from types import FunctionType, MethodType
 import json
-import ast
+import numpy as np
+
+class NumpyEncoder(json.JSONEncoder):
+    """ Special json encoder for numpy types """
+    def default(self, obj):
+        if isinstance(obj, (np.int_, np.intc, np.intp, np.int8,
+                            np.int16, np.int32, np.int64, np.uint8,
+                            np.uint16, np.uint32, np.uint64)):
+            return int(obj)
+        elif isinstance(obj, (np.float_, np.float16, np.float32,
+                              np.float64)):
+            return float(obj)
+        elif isinstance(obj, (np.ndarray,)):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
+
+
 class NodeRegister(object):
     def __init__(self) -> None:
         super().__init__()
@@ -12,7 +28,9 @@ class NodeRegister(object):
 
     def pub(self, topic : str, msg):
         if isinstance(msg, dict):
-            self.node.publish(topic, str(msg))
+            # self.node.publish(topic, str(msg))
+            data = json.dumps(msg, cls=NumpyEncoder)
+            self.node.publish(topic, data)
         elif isinstance(msg, object):
             # self.node.publish(topic, str(msg.__dict__))
             data = json.dumps(msg, default=lambda o:o.__dict__)
