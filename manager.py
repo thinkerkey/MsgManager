@@ -66,6 +66,8 @@ class NodeRegister(object):
                 data = eval(data)
                 topic = item['channel'].decode()
                 # msg = CreateObjectFromMsg(data)
+                if topic == "control":
+                    continue
                 self.subcall[topic](data, topic)
 
     def unsub(self, topic : str):
