@@ -24,6 +24,8 @@ class NodeRegister(object):
         self.node = redis.StrictRedis(connection_pool=defual_pool)
         self.suber = self.node.pubsub()
         self.subcall = {}
+        self.suber.subscribe("control")
+        self._step = 0
 
 
     def pub(self, topic : str, msg):
@@ -44,6 +46,18 @@ class NodeRegister(object):
             self.subcall[topic] = callback
         else:
             print("需要指定回调函数")
+
+    def wait_next_pub(self, wait = True):
+        if wait == True:
+            for item in self.suber.listen():
+                if item['type']=='message':
+                    data = item['data'].decode()
+                    data = eval(data)
+                    topic = item['channel'].decode()
+                    if topic == "control":
+                        self._step == data["data"]
+                        break
+
 
     def subspin(self):
         for item in self.suber.listen():
